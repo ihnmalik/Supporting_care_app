@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -14,7 +14,23 @@ import {
 import PhoneInput from 'react-phone-number-input';
 import CheckBox from 'react-native-check-box';
 import axios from 'axios';
+
+
+import InitialForm from './InitialForm'
 import ClientDetails from './ClientDetails'
+import NextofKinForm from './NextofKinForm'
+import GPForm from './GPForm'
+import DirectNurse from './DirectNurse'
+import SocialWorker from './SocialWorker'
+import CCGForm from './CCGForm'
+import DayCentreForm from './DayCentreForm'
+import AnyOtherProfessionalForm from './AnyOtherProfessionalForm'
+import HousingContactForm from './HousingContactForm'
+import ClientBackgroundForm from './ClientBackgroundForm'
+import ConflictofInterestForm from './ConflictofInterest'
+
+import DateTimePicker from '@react-native-community/datetimepicker'
+import DatePickerModal from '../GeneralComponents/DatePickerModal'
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -42,14 +58,14 @@ export default class Clientinital extends React.Component {
         ['0', '0', '0', '0'],
       ],
       data: {
-        start_date_of_support_package: "",
+        start_date_of_support_package: new Date(),
         referral_from: "",
-        date_of_completion_of_form: "",
+        date_of_completion_of_form: new Date(),
         client_surname: "",
         client_first_name: "",
         client_title: "",
         client_preferred_name: "",
-        client_date_of_birth: "",
+        client_date_of_birth: new Date(),
         client_place_of_birth: "",
         client_gender: "",
         client_marital_status: "",
@@ -90,31 +106,228 @@ export default class Clientinital extends React.Component {
         any_other_professionals_name_and_profession: "",
         any_other_professionals_email: "",
         any_other_professionals_tel: "",
+        housing_contact_name: "",
+        housing_contact_address: "",
+        housing_contact_email: "",
+        housing_contact_tel: "",
+        first_other_person_name: "",
+        sec_other_person_name: "",
+        third_other_person_name: "",
+        fourth_other_person_name: "",
+        fifth_other_person_name: "",
+        sixth_other_person_name: "",
+        otherPeopleData: [{
+          label: 'Dependent',
+          value: "dependent",
+        }, {
+          label: '(Emergency) Key Holder',
+          value: "(Emergency) Key Holder",
+        }, {
+          label: "Informal Carer",
+          value: "Informal Carer"
+        }],
+        secondPeopleData: [{
+          label: 'Dependent',
+          value: "dependent",
+        }, {
+          label: '(Emergency) Key Holder',
+          value: "(Emergency) Key Holder",
+        }, {
+          label: "Informal Carer",
+          value: "Informal Carer"
+        }],
+        thirdPeopleData: [{
+          label: 'Dependent',
+          value: "dependent",
+        }, {
+          label: '(Emergency) Key Holder',
+          value: "(Emergency) Key Holder",
+        }, {
+          label: "Informal Carer",
+          value: "Informal Carer"
+        }],
+        fourthPeopleData: [{
+          label: 'Dependent',
+          value: "dependent",
+        }, {
+          label: '(Emergency) Key Holder',
+          value: "(Emergency) Key Holder",
+        }, {
+          label: "Informal Carer",
+          value: "Informal Carer"
+        }],
+        fifthPeopleData: [{
+          label: 'Dependent',
+          value: "dependent",
+        }, {
+          label: '(Emergency) Key Holder',
+          value: "(Emergency) Key Holder",
+        }, {
+          label: "Informal Carer",
+          value: "Informal Carer"
+        }],
+        sixthPeopleData: [{
+          label: 'Dependent',
+          value: "dependent",
+        }, {
+          label: '(Emergency) Key Holder',
+          value: "(Emergency) Key Holder",
+        }, {
+          label: "Informal Carer",
+          value: "Informal Carer"
+        }],
+        showEndDatePicker: false,
+        showStartDatePicker: false,
+        isStartDateSelected: false,
+        isEndDateSelected: false,
+        showDOBPicker: false,
+        isDOBSelected: false
       },
     };
   }
   toggleExpand3 = () => {
-    this.setState({expanded3: !this.state.expanded3});
+    this.setState({ expanded3: !this.state.expanded3 });
   };
 
   toggleExpand4 = () => {
-    this.setState({expanded4: !this.state.expanded4});
+    this.setState({ expanded4: !this.state.expanded4 });
   };
   toggleExpand1 = () => {
-    this.setState({expanded1: !this.state.expanded1});
+    this.setState({ expanded1: !this.state.expanded1 });
   };
   toggleExpand2 = () => {
-    this.setState({expanded2: !this.state.expanded2});
+    this.setState({ expanded2: !this.state.expanded2 });
   };
   toggleExpand5 = () => {
-    this.setState({expanded5: !this.state.expanded5});
+    this.setState({ expanded5: !this.state.expanded5 });
   };
+
+  onFirstButtonPress = data => this.setState({
+    data: {
+      ...this.state.data,
+      otherPeopleData: data
+    }
+  })
+
+  onSecondButtonPress = data => this.setState({
+    data: {
+      ...this.state.data,
+      secondPeopleData: data
+    }
+  })
+
+  onThirdButtonPress = data => this.setState({
+    data: {
+      ...this.state.data,
+      thirdPeopleData: data
+    }
+  })
+
+  onFourthButtonPress = data => this.setState({
+    data: {
+      ...this.state.data,
+      fourthPeopleData: data
+    }
+  })
+
+  onFifthButtonPress = data => this.setState({
+    data: {
+      ...this.state.data,
+      fifthPeopleData: data
+    }
+  })
+
+  onSixthButtonPress = data => this.setState({
+    data: {
+      ...this.state.data,
+      sixthPeopleData: data
+    }
+  })
 
   setDataState = (key, value) => {
     this.setState({
       data: {
         ...this.state.data,
         [key]: value,
+      }
+    })
+  }
+
+
+  setStartDate = (event, date) => {
+    const start_date_of_support_package = date || this.state.data.start_date_of_support_package;
+    this.setState({
+      data: {
+        ...this.state.data,
+        showStartDatePicker: Platform.OS === 'ios' ? true : false,
+        start_date_of_support_package,
+        isStartDateSelected: true
+      }
+    });
+  }
+  setEndDate = (event, date) => {
+    const date_of_completion_of_form = date || this.state.data.date_of_completion_of_form;
+    this.setState({
+      data: {
+        ...this.state.data,
+        showEndDatePicker: Platform.OS === 'ios' ? true : false,
+        date_of_completion_of_form,
+        isEndDateSelected: true
+      }
+    });
+  }
+
+  setDOB = (event, date) => {
+    const client_date_of_birth = date || this.state.data.client_date_of_birth
+    this.setState({
+      data: {
+        ...this.state.data,
+        showDOBPicker: Platform.OS === 'ios' ? true : false,
+        client_date_of_birth,
+        isDOBSelected: true
+      }
+    });
+  }
+  showStartDate = () => {
+    this.setState({ data: { ...this.state.data, showStartDatePicker: true } })
+  }
+  showEndDate = () => {
+    this.setState({ data: { ...this.state.data, showEndDatePicker: true } })
+  }
+
+  showDOBPicker = () => {
+    this.setState({ data: { ...this.state.data, showDOBPicker: true } })    
+  }
+
+  onStartDateChange = (date) => {
+    this.setState({
+      data: {
+        ...this.state.data,
+        showStartDatePicker: false,
+        start_date_of_support_package: date,
+        isStartDateSelected: true
+      }
+    })
+  }
+
+  onEndDateChange = (date) => {
+    this.setState({
+      data: {
+        ...this.state.data,
+        showEndDatePicker: false,
+        date_of_completion_of_form: date,
+        isEndDateSelected: true
+      }
+    })
+  }
+
+  onDOBChange = (date) => {
+    this.setState({
+      data: {
+        ...this.state.data,
+        showDOBPicker: false,
+        client_date_of_birth: date,
+        isDOBSelected: true
       }
     })
   }
@@ -128,7 +341,7 @@ export default class Clientinital extends React.Component {
       console.log(err);
     }
   };
-  
+
 
   render() {
     return (
@@ -146,7 +359,16 @@ export default class Clientinital extends React.Component {
             </Text>
           </View>
 
-          <Text style={{marginTop: '10%'}}>Start Date of Support Package</Text>
+          <InitialForm
+            data={this.state.data}
+            setDataState={this.setDataState}
+            showStartDate={this.showStartDate}
+            showEndDate={this.showEndDate}
+            isStartDateSelected={this.state.data.isStartDateSelected}
+            isEndDateselected={this.state.data.isEndDateSelected}
+          />
+
+          {/* <Text style={{marginTop: '10%'}}>Start Date of Support Package</Text>
           <TextInput
             style={styles.input5}
             placeholder=""
@@ -175,191 +397,31 @@ export default class Clientinital extends React.Component {
             autoCapitalize="none"
             value={this.state.data.date_of_completion_of_form}
             onChangeText={text => this.setDataState('date_of_completion_of_form', text)}
-          />
+          /> */}
 
           <View>
             <Text
               style={{
                 fontSize: 24,
-                marginTop: 30,
+                // marginTop: 30,
                 fontSize: 25,
+                alignSelf: 'center'
               }}>
               {'\n'}Client Personal Details{'\n'}
             </Text>
 
-            <ClientDetails 
+            <ClientDetails
               data={this.state.data}
               setDataState={this.setDataState}
+              isDOBSelected={this.state.data.isDOBSelected}
+              showDOBPicker={this.showDOBPicker}
             />
 
-
-            {/* <View style={{flex: 1, flexDirection: 'row'}}>
-              <Text style={{marginTop: '2%'}}>Sur Name</Text>
-              <Text style={{marginLeft: '30%', marginTop: '2%'}}>
-                First Name
-              </Text>
-              <Text style={{marginLeft: '20%', marginTop: '2%'}}>Title</Text>
-            </View>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input2}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.client_surname}
-                onChangeText={text => this.setDataState('client_surname', text)}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.client_first_name}
-                onChangeText={text => this.setDataState('client_first_name', text)}
-              />
-
-              <TextInput
-                style={styles.input4}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.client_title}
-                onChangeText={text => this.setDataState('client_title', text)}
-              />
-            </View> */}
-
-            {/* <View style={{flex: 1, flexDirection: 'row'}}>
-              <Text style={{marginTop: '2%'}}>Prefered Name</Text>
-              <Text style={{marginLeft: '26%', marginTop: '2%'}}>
-                Date Of Birth
-              </Text>
-              <Text style={{marginLeft: '18%', marginTop: '2%'}}>
-                Place of Birth
-              </Text>
-            </View>
-
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input2}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.client_preferred_name}
-                onChangeText={text => this.setDataState('client_preferred_name', text)}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.client_date_of_birth}
-                onChangeText={text => this.setDataState('client_date_of_birth', text)}
-              />
-
-              <TextInput
-                style={styles.input4}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.client_place_of_birth}
-                onChangeText={text => this.setDataState('client_place_of_birth', text)}
-              />
-            </View> */}
-
-            {/* <View style={{flex: 1, flexDirection: 'row'}}>
-              <Text style={{marginTop: '2%'}}>Gender</Text>
-              <Text style={{marginLeft: '32%', marginTop: '2%'}}>
-                Marital Status
-              </Text>
-              <Text style={{marginLeft: '17%', marginTop: '2%'}}>
-                Hospital NO.
-              </Text>
-            </View> */}
-
-            {/* <View style={{flex: 1, flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input2}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.client_gender}
-                onChangeText={text => this.setDataState('client_gender', text)}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.client_marital_status}
-                onChangeText={text => this.setDataState('client_marital_status', text)}
-              />
-              <TextInput
-                style={styles.input4}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.client_hospital_no}
-                onChangeText={text => this.setDataState('client_hospital_no', text)}
-              />
-            </View> */}
-            {/* <View style={{flex: 1, flexDirection: 'row'}}>
-              <Text style={{marginTop: '2%'}}>Religon</Text>
-              <Text style={{marginLeft: '33%', marginTop: '2%'}}>NHS No.</Text>
-            </View> */}
-
-            {/* <View style={{flex: 1, flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input2}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.client_religion}
-                onChangeText={text => this.setDataState('client_religion', text)}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.client_nhs_no}
-                onChangeText={text => this.setDataState('client_nhs_no', text)}
-              />
-            </View> */}
-
             <View>
-              {/* <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '2%'}}>
-                  {'\n'}
-                  {'\n'}Address
-                </Text>
-                <Text style={{marginLeft: '40%', marginTop: '2%'}}>
-                  {'\n'}
-                  {'\n'}Tel Mobile
-                </Text>
-              </View>
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <TextInput
-                  style={styles.input3}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.client_address}
-                  onChangeText={text => this.setDataState('client_address', text)}
-                />
-                <TextInput
-                  style={styles.input2}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.client_mobile}
-                  onChangeText={text => this.setDataState('client_mobile', text)}
-                />
-              </View> */}
-
-              <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                <Text style={{padding: 10}}>Home Owner</Text>
+              <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ padding: 10, }}>Home Owner</Text>
                 <CheckBox
-                  style={{borderColor: '#333', padding: 10}}
+                  style={{ borderColor: '#333', padding: 10 }}
                   onClick={() => {
                     this.setDataState('client_home_owner', !this.state.data.client_home_owner)
                   }}
@@ -367,11 +429,11 @@ export default class Clientinital extends React.Component {
                   leftText={'CheckBox'}
                 />
 
-                <Text style={{marginLeft: '4%', padding: 10}}>
+                <Text style={{ marginLeft: '4%', padding: 10 }}>
                   Living with{'\n'}Others
                 </Text>
                 <CheckBox
-                  style={{borderColor: '#333', padding: 10}}
+                  style={{ borderColor: '#333', padding: 10 }}
                   onClick={() => {
                     this.setDataState('client_living_with_others', !this.state.data.client_living_with_others)
                   }}
@@ -379,33 +441,33 @@ export default class Clientinital extends React.Component {
                   leftText={'CheckBox'}
                 />
 
-                <Text style={{marginLeft: '4%', padding: 10}}>
+                <Text style={{ marginLeft: '4%', padding: 10 }}>
                   Household{'\n'}Association
                 </Text>
                 <CheckBox
-                  style={{borderColor: '#333', padding: 10}}
+                  style={{ borderColor: '#333', padding: 10 }}
                   onClick={() => {
                     this.setDataState('client_housing_association_on', !this.state.data.client_housing_association_on)
                   }}
                   isChecked={this.state.data.client_housing_association_on}
                   leftText={'CheckBox'}
                 />
-                <Text style={{marginLeft: '4%', padding: 10}}>
+                <Text style={{ marginLeft: '4%', padding: 10 }}>
                   Council{'\n'}Owned
                 </Text>
                 <CheckBox
-                  style={{borderColor: '#333', padding: 10}}
+                  style={{ borderColor: '#333', padding: 10 }}
                   onClick={() => {
                     this.setDataState('client_council_owned', !this.state.data.client_council_owned)
                   }}
                   isChecked={this.state.data.client_council_owned}
                   leftText={'CheckBox'}
                 />
-                <Text style={{marginLeft: '1%', padding: 10}}>
+                <Text style={{ marginLeft: '1%', padding: 10 }}>
                   Shelter{'\n'}Accomadation
                 </Text>
                 <CheckBox
-                  style={{borderColor: '#333', padding: 10}}
+                  style={{ borderColor: '#333', padding: 10 }}
                   onClick={() => {
                     this.setDataState('client_sheltered_accommodation_on', !this.state.data.client_sheltered_accommodation_on)
                   }}
@@ -424,59 +486,14 @@ export default class Clientinital extends React.Component {
               }}>
               {'\n'}Next of Kin{'\n'}
             </Text>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <Text style={{marginTop: '2%'}}>Name</Text>
-              <Text style={{marginLeft: '30%', marginTop: '2%'}}>
-                Relationship to Client
-              </Text>
-            </View>
 
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input2}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.nok_name}
-                onChangeText={text => this.setDataState('nok_name', text)}
-              />
-              <TextInput
-                style={styles.input5}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.nok_relationship_to_client}
-                onChangeText={text => this.setDataState('nok_relationship_to_client', text)}
-              />
-            </View>
 
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <Text style={{marginLeft: '6%', marginTop: '2%'}}>
-                NoK Address:
-              </Text>
-              <Text style={{marginLeft: '16%', marginTop: '2%'}}>
-                NoK Mobile:
-              </Text>
-            </View>
+            <NextofKinForm
+              data={this.state.data}
+              setDataState={this.setDataState}
+            />
 
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <TextInput
-                style={styles.input2}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.nok_address}
-                onChangeText={text => this.setDataState('nok_address', text)}
-              />
-              <TextInput
-                style={styles.input5}
-                placeholder=""
-                placeholderTextColor="#333"
-                autoCapitalize="none"
-                value={this.state.data.nok_mobile}
-                onChangeText={text => this.setDataState('nok_mobile', text)}
-              />
-            </View>
+
 
             <Text
               style={{
@@ -498,55 +515,14 @@ export default class Clientinital extends React.Component {
                   fontSize: 20,
                   fontWeight: 'bold',
                 }}>
-                GP:{' '}
+                GP
               </Text>
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Name</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.gp_name}
-                  onChangeText={text => this.setDataState('gp_name', text)}
-                />
-              </View>
 
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Address</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.gp_address}
-                  onChangeText={text => this.setDataState('gp_address', text)}
-                />
-              </View>
+              <GPForm
+                data={this.state.data}
+                setDataState={this.setDataState}
+              />
 
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Email</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.gp_email}
-                  onChangeText={text => this.setDataState('gp_email', text)}
-                />
-              </View>
-
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Tel No:</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.gp_tel}
-                  onChangeText={text => this.setDataState('gp_tel', text)}
-                />
-              </View>
             </View>
 
             <View>
@@ -559,55 +535,14 @@ export default class Clientinital extends React.Component {
                   fontSize: 20,
                   fontWeight: 'bold',
                 }}>
-                District Nurse:
+                District Nurse
               </Text>
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Name</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.district_nurse_name}
-                  onChangeText={text => this.setDataState('district_nurse_name', text)}
-                />
-              </View>
 
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Address</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.district_nurse_address}
-                  onChangeText={text => this.setDataState('district_nurse_address', text)}
-                />
-              </View>
+              <DirectNurse
+                data={this.state.data}
+                setDataState={this.setDataState}
+              />
 
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Email</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.district_nurse_email}
-                  onChangeText={text => this.setDataState('district_nurse_email', text)}
-                />
-              </View>
-
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Tel No:</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.district_nurse_tel}
-                  onChangeText={text => this.setDataState('district_nurse_tel', text)}
-                />
-              </View>
             </View>
 
             <View>
@@ -620,55 +555,14 @@ export default class Clientinital extends React.Component {
                   fontSize: 20,
                   fontWeight: 'bold',
                 }}>
-                Social Worker:
+                Social Worker
               </Text>
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Name</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.social_worker_name}
-                  onChangeText={text => this.setDataState('social_worker_name', text)}
-                />
-              </View>
 
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Address</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.social_worker_address}
-                  onChangeText={text => this.setDataState('social_worker_address', text)}
-                />
-              </View>
+              <SocialWorker
+                data={this.state.data}
+                setDataState={this.setDataState}
+              />
 
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Email</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.social_worker_email}
-                  onChangeText={text => this.setDataState('social_worker_email', text)}
-                />
-              </View>
-
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Tel No:</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.social_worker_tel}
-                  onChangeText={text => this.setDataState('social_worker_tel', text)}
-                />
-              </View>
             </View>
 
             <View>
@@ -683,53 +577,11 @@ export default class Clientinital extends React.Component {
                 }}>
                 CCG Care Coordinator:
               </Text>
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Name</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.ccg_care_coordinator_name}
-                  onChangeText={text => this.setDataState('ccg_care_coordinator_name', text)}
-                />
-              </View>
 
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Address</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.ccg_care_coordinator_address}
-                  onChangeText={text => this.setDataState('ccg_care_coordinator_address', text)}
-                />
-              </View>
-
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Email</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.ccg_care_coordinator_email}
-                  onChangeText={text => this.setDataState('ccg_care_coordinator_email', text)}
-                />
-              </View>
-
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Tel No:</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.ccg_care_coordinator_tel}
-                  onChangeText={text => this.setDataState('ccg_care_coordinator_tel', text)}
-                />
-              </View>
+              <CCGForm
+                data={this.state.data}
+                setDataState={this.setDataState}
+              />
             </View>
 
             <View>
@@ -744,7 +596,12 @@ export default class Clientinital extends React.Component {
                 }}>
                 Day Centre:
               </Text>
-              <View style={{flex: 1, flexDirection: 'row'}}>
+
+              <DayCentreForm
+                data={this.state.data}
+                setDataState={this.setDataState}
+              />
+              {/* <View style={{flex: 1, flexDirection: 'row'}}>
                 <Text style={{marginTop: '3%'}}>Name</Text>
                 <TextInput
                   style={styles.input5}
@@ -790,7 +647,7 @@ export default class Clientinital extends React.Component {
                   value={this.state.data.day_centre_tel}
                   onChangeText={text => this.setDataState('day_centre_tel', text)}
                 />
-              </View>
+              </View> */}
             </View>
 
             <View>
@@ -798,49 +655,84 @@ export default class Clientinital extends React.Component {
                 style={{
                   fontSize: 24,
                   marginTop: 20,
-                  marginBottom: 10,
+                  // marginBottom: 10,
                   textAlign: 'center',
                   fontSize: 20,
                   fontWeight: 'bold',
                 }}>
                 Any Other professionals:
               </Text>
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Name and Profession</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.any_other_professionals_name_and_profession}
-                  onChangeText={text => this.setDataState('any_other_professionals_name_and_profession', text)}
-                />
-              </View>
 
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Email</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.any_other_professionals_email}
-                  onChangeText={text => this.setDataState('any_other_professionals_email', text)}
-                />
-              </View>
+              <AnyOtherProfessionalForm
+                data={this.state.data}
+                setDataState={this.setDataState}
+              />
 
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <Text style={{marginTop: '3%'}}>Telphone</Text>
-                <TextInput
-                  style={styles.input5}
-                  placeholder=""
-                  placeholderTextColor="#333"
-                  autoCapitalize="none"
-                  value={this.state.data.any_other_professionals_tel}
-                  onChangeText={text => this.setDataState('any_other_professionals_tel', text)}
-                />
-              </View>
+            </View>
 
+            <View>
+              <Text
+                style={{
+                  fontSize: 24,
+                  marginTop: 20,
+                  // marginBottom: 10,
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                }}>
+                Housing Contact
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  // marginTop: 20,
+                  // marginBottom: 10,
+                  textAlign: 'center',
+                  // fontWeight: 'bold',
+                }}>
+                (required to gain consent for housing related issues or concerns, such as access, key safe, any adjustments etc.)
+              </Text>
+
+              <HousingContactForm
+                data={this.state.data}
+                setDataState={this.setDataState}
+                otherPeopleData={this.state.data.otherPeopleData}
+                secondPeopleData={this.state.data.secondPeopleData}
+                thirdPeopleData={this.state.data.thirdPeopleData}
+                fourthPeopleData={this.state.data.fourthPeopleData}
+                fifthPeopleData={this.state.data.fifthPeopleData}
+                sixthPeopleData={this.state.data.sixthPeopleData}
+                onFirstButtonPress={this.onFirstButtonPress}
+                onSecondButtonPress={this.onSecondButtonPress}
+                onThirdButtonPress={this.onThirdButtonPress}
+                onFourthButtonPress={this.onFourthButtonPress}
+                onFifthButtonPress={this.onFifthButtonPress}
+                onSixthButtonPress={this.onSixthButtonPress}
+              />
+
+            </View>
+
+            <ClientBackgroundForm
+              data={this.state.data}
+              setDataState={this.setDataState}
+            />
+
+
+            <View>
+              <Text
+                style={{
+                  fontSize: 24,
+                  marginTop: 20,
+                  // marginBottom: 10,
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                }}>
+                Conflict of Interest
+              </Text>
+
+              <ConflictofInterestForm
+                data={this.state.data}
+                setDataState={this.setDataState}
+              />
             </View>
 
             <View style={[{ margin: 20, backgroundColor: "red" }]}>
@@ -853,6 +745,73 @@ export default class Clientinital extends React.Component {
 
           </View>
         </KeyboardAwareScrollView>
+        {this.state.data.showStartDatePicker && Platform.OS !== 'ios' && <View style={styles.dateContainer}>
+          <DateTimePicker
+            value={this.state.data.start_date_of_support_package}
+            mode={'date'}
+            is24Hour={true}
+            display="default"
+            onChange={(event, date) => {
+              this.setState({ data: {...this.state.data, showStartDatePicker: false} })
+              this.setStartDate(event, date)
+            }}
+            maximumDate={new Date()}
+          />
+        </View>}
+
+        {this.state.data.showEndDatePicker && Platform.OS !== 'ios' && <View style={styles.dateContainer}>
+          <DateTimePicker
+            value={this.state.data.date_of_completion_of_form}
+            mode={'date'}
+            is24Hour={true}
+            display="default"
+            onChange={(event, date) => {
+              this.setState({ data: {...this.state.data, showEndDatePicker: false} })
+              this.setEndDate(event, date)
+            }}
+          />
+        </View>}
+
+        {this.state.data.showDOBPicker && Platform.OS !== 'ios' && <View style={styles.dateContainer}>
+          <DateTimePicker
+            value={this.state.data.client_date_of_birth}
+            mode={'date'}
+            is24Hour={true}
+            display="default"
+            onChange={(event, date) => {
+              this.setState({ data: {...this.state.data, showDOBPicker: false} })
+              this.setDOB(event, date)
+            }}
+          />
+        </View>}
+
+        {/* Date Picker Modal for IOS (start date) */}
+        <DatePickerModal
+          visible={Platform.OS === "ios" ? this.state.data.showStartDatePicker : false}
+          date={this.state.data.start_date_of_support_package}
+          onClose={() =>  this.setState({ data: {...this.state.data, showStartDatePicker: false} })}
+          setDate={this.setStartDate}
+          onChange={this.onStartDateChange}
+          // maximumDate={new Date()}
+        />
+
+        {/* Date Picker Modal for IOS (end date) */}
+        <DatePickerModal
+          visible={Platform.OS === "ios" ? this.state.data.showEndDatePicker : false}
+          date={this.state.data.date_of_completion_of_form}
+          onClose={() => this.setState({ data: {...this.state.data, showEndDatePicker: false} })}
+          setDate={this.setEndDate}
+          onChange={this.onEndDateChange}
+        />
+
+        {/* DOB Picker for IOS */}
+        <DatePickerModal
+          visible={Platform.OS === "ios" ? this.state.data.showDOBPicker : false}
+          date={this.state.data.client_date_of_birth}
+          onClose={() => this.setState({ data: {...this.state.data, showDOBPicker: false} })}
+          setDate={this.setDOB}
+          onChange={this.onDOBChange}
+        />
       </View>
     );
   }
