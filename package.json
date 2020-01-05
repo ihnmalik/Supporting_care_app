@@ -19,6 +19,7 @@
     "react-native-dynamic-form": "^0.0.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
     "react-native-radio-buttons-group": "^1.0.7",
+    "react-native-simple-radio-button": "^2.7.4",
     "react-phone-number-input": "^2.5.1"
   },
   "devDependencies": {
