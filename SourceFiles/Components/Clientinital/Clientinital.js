@@ -70,6 +70,14 @@ export default class Clientinital extends React.Component {
         client_preferred_name: "",
         client_date_of_birth: new Date(),
         client_place_of_birth: "",
+        // gender_all: [
+        //   {label: 'Male', value="male"},
+        //   {label: 'Female', value="female"}
+        // ],
+        gender_all: [
+          { label: 'Male   ', value: 'male' },
+          { label: 'Female', value:'female' },
+        ],
         client_gender: "",
         client_marital_status: "",
         client_religion: "",
@@ -187,13 +195,13 @@ export default class Clientinital extends React.Component {
         isDOBSelected: false,
         physical_health_wellbeing: '',
         pressure_scores: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isPressureScoreOpen: false,
         what_done_for_pressure_score: "",
         recent_hospital_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isRecetHospitalCheckOpen: false,
@@ -209,77 +217,77 @@ export default class Clientinital extends React.Component {
         medication_taken_9: "",
         medication_taken_10: "",
         medication_administration_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isMedicationAdminOpen: false,
         how_medication_administarted_text: "",
         any_known_allergies_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isKnownAllergiesOpen: false,
         known_allergies_text: "",
         any_falls_over_months_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isAnyFallsOpen: false,
         known_allergies_text: "",
         communication_needs_check: [
-          { label: 'Yes', value: 0 },
-          { label: 'No', value: 1 },
+          { label: 'Yes   ', value: 0 },
+          { label: 'No   ', value: 1 },
         ],
         isCommunicationNeedsOpen: false,
         communication_needs_text: "",
         communication_needs_check: [
-          { label: 'Yes', value: 0 },
-          { label: 'No', value: 1 },
+          { label: 'Yes   ', value: 0 },
+          { label: 'No   ', value: 1 },
         ],
         sensor_imparement_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isSensoryImpairmentOpen: false,
         sensory_impairment_text: "",
         visual_imparement_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isVisualyImpairmentOpen: false,
         visualy_impairment_text: "",
         hearing_imparement_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isHearingImpairmentOpen: false,
         hearing_impairment_text: "",
         continence_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isContinenceOpen: false,
         continence_text: "",
         mobility_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isMobilityOpen: false,
         mobility_text: "",
         mobility_transfer_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isMobilityTransferOpen: false,
         mobility_transfer_text: "",
         transfer_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isTransferOpen: false,
         transfer_text: "",
         mental_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isMentalCheckOpen: false,
@@ -294,43 +302,43 @@ export default class Clientinital extends React.Component {
         ],
         mentalCapacityChecked: false,
         current_deprivation_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isCurrentDeprivationOpen: false,
         current_deprivation_check_text: "",
         lasting_power_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isLastingPowerOpen: false,
         lasting_power_text: "",
         careline_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isCarelineOpen: false,
         careline_text: "",
         working_smoke_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         is_working_smoke_open: false,
         working_smoke_text: "",
         carbon_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         is_carbon_check_open: false,
         carbon_text: "",
         specialist_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         is_specialist_eq_check_open: false,
         specialist_eq_text: "",
         safeguarding_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         is_safeguarding_check_open: false,
@@ -347,15 +355,17 @@ export default class Clientinital extends React.Component {
         carer_view_text: "",
         referrer_information_text: "",
         review_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
         isReviewChecked: false,
         review_check: [
-          { label: 'Yes', value: 0 },
+          { label: 'Yes   ', value: 0 },
           { label: 'No', value: 1 },
         ],
-        is_providing_care_checked: false
+        is_providing_care_checked: false,
+        client_signature: "",
+        family_member_signature: ""
       },
     };
   }
@@ -497,6 +507,19 @@ export default class Clientinital extends React.Component {
         }
       })
     }
+  }
+
+  handleClientGender = (val) => {
+    // if(val === 'male') {
+      this.setState({
+        data: {
+          ...this.state.data,
+          client_gender: val
+        }
+      })
+    // } else {
+
+    // }
   }
 
   onContinenceChange = (val) => {
@@ -771,7 +794,23 @@ export default class Clientinital extends React.Component {
     }
   }
 
-  
+  saveClientSign = (path) => {
+    this.setState({
+      data: {
+        ...this.state.data,
+        client_signature: path
+      }
+    })
+  }
+
+  saveFamilyMemberSign = (path) => {
+    this.setState({
+      data: {
+        ...this.state.data,
+        family_member_signature: path
+      }
+    })
+  }
 
 
 
@@ -1057,6 +1096,7 @@ export default class Clientinital extends React.Component {
                 setDataState={this.setDataState}
                 isDOBSelected={this.state.data.isDOBSelected}
                 showDOBPicker={this.showDOBPicker}
+                handleClientGender={this.handleClientGender}
               />
 
               <View>
@@ -1400,6 +1440,8 @@ export default class Clientinital extends React.Component {
                   onMobilityTransferChange={this.onMobilityTransferChange}
                   onTransferChange={this.onTransferChange}
                   onMentalCheckChange={this.onMentalCheckChange}
+                  saveClientSign={this.saveClientSign}
+                  saveFamilyMemberSign={this.saveFamilyMemberSign}
                 />
               </View>
 

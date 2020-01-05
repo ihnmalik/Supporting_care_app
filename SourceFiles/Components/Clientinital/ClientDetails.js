@@ -4,6 +4,9 @@ import moment from 'moment'
 
 import styles from '../../Styles/FormStyles'
 
+import RadioForm from 'react-native-simple-radio-button';
+
+
 export default (props) => (
     <View>
         {/* Name Input */}
@@ -65,14 +68,14 @@ export default (props) => (
                     style={{ ...styles.input, justifyContent: 'center', }}
                     onPress={props.showDOBPicker}
                 >
-                <Text>
-                    {
-                        props.isDOBSelected ?
-                            moment(props.data.client_date_of_birth).format('DD/MM/YYYY')
-                            :
-                            ''
-                    }
-                </Text>
+                    <Text>
+                        {
+                            props.isDOBSelected ?
+                                moment(props.data.client_date_of_birth).format('DD/MM/YYYY')
+                                :
+                                ''
+                        }
+                    </Text>
                 </TouchableOpacity>
             </View>
 
@@ -94,13 +97,22 @@ export default (props) => (
         <View style={styles.container}>
             <View style={styles.colContainer}>
                 <Text>Gender</Text>
-                <TextInput
+                {/* <TextInput
                     style={styles.input}
                     placeholder=""
                     placeholderTextColor="#333"
                     autoCapitalize="none"
                     value={props.data.client_gender}
                     onChangeText={text => props.setDataState('client_gender', text)}
+                /> */}
+
+                <RadioForm
+                    radio_props={props.data.gender_all}
+                    initial={-1}
+                    formHorizontal={true}
+                    labelHorizontal={true}
+                    onPress={(value) => props.handleClientGender(value)}
+                    buttonColor="black"
                 />
             </View>
 
